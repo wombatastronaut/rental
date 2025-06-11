@@ -6,20 +6,22 @@
 
 ## Screenshots/Videos:
 
-### Full features
-![](./assets/full-flow.mov)
+### Full features (CRUD)
+![Watch the demo](./assets/full-flow.mov)
+
+<video width="640" controls>
+  <source src="assets/full-flow.mov" type="video/quicktime">
+  Your browser does not support the video tag.
+</video>
 
 ### Get all agents endpoint
+![alt Get all agent](./assets/get-all-agents.png)
 
 ### Get agent endpoint
-
-### Create agent endpoint
-
-### Update agent endpoint
+![alt Get agent](./assets/get-agent.png)
 
 ### Delete agent endpoint
-
-
+![alt DELETE agent](./assets/delete-agent.png)
 
 ## ERD
 Via Mermaid Chart
