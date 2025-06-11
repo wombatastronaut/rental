@@ -7,13 +7,10 @@
 ## Screenshots/Videos:
 
 ### Full features (CRUD)
-![Watch the demo](./assets/full-flow.mov)
-![Watch the demo](./assets/full-flow.mp4)
 
-<video width="640" controls>
-  <source src="assets/full-flow.mov" type="video/quicktime">
-  Your browser does not support the video tag.
-</video>
+Check out the link for the full demo
+
+![Watch the demo](./assets/demo.png)(https://drive.google.com/file/d/1SlsHe8dlbi2-5woxrOfUGiXXpgrDXq5Z/view)
 
 ### Get all agents endpoint
 ![alt Get all agent](./assets/get-all-agents.png)
