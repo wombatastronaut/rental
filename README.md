@@ -8,9 +8,9 @@
 
 ### Full features (CRUD)
 
-Check out the link for the full demo
+Check out the link below the image for the full demo
 
-![Watch the demo](https://drive.google.com/file/d/1SlsHe8dlbi2-5woxrOfUGiXXpgrDXq5Z/view)(./assets/demo.png)
+![Watch the demo](./assets/demo.png)(https://drive.google.com/file/d/1SlsHe8dlbi2-5woxrOfUGiXXpgrDXq5Z/view)
 
 ### Get all agents endpoint
 ![alt Get all agent](./assets/get-all-agents.png)
