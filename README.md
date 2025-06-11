@@ -10,7 +10,7 @@
 
 Check out the link for the full demo
 
-![Watch the demo](./assets/demo.png)(https://drive.google.com/file/d/1SlsHe8dlbi2-5woxrOfUGiXXpgrDXq5Z/view)
+![Watch the demo](https://drive.google.com/file/d/1SlsHe8dlbi2-5woxrOfUGiXXpgrDXq5Z/view)(./assets/demo.png)
 
 ### Get all agents endpoint
 ![alt Get all agent](./assets/get-all-agents.png)
