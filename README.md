@@ -1,15 +1,30 @@
 # Rental Management
 
 ## Set-up
-- API - go to backend folder, run ```npm install```, then run ```npm run dev```
-- Client - go to client folder, run ```npm install```, then run ```npm run dev```
+- API (Express.js) - Go to backend folder, run ```npm install```, then run ```npm run dev```
+- Client (Vue) - Go to client folder, run ```npm install```, then run ```npm run dev```
 
-Screenshots/Videos:
+## Screenshots/Videos:
+
+### Full features
+![](./assets/full-flow.mov)
+
+### Get all agents endpoint
+
+### Get agent endpoint
+
+### Create agent endpoint
+
+### Update agent endpoint
+
+### Delete agent endpoint
+
+
 
 ## ERD
 Via Mermaid Chart
 
-![alt ERD](./erd.png)
+![alt ERD](./assets/erd.png)
 
 ## Improvements
 - A property can also be managed by multiple agents

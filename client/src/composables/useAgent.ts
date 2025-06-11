@@ -20,6 +20,10 @@ export function useAgent() {
     error.value = message;
   };
 
+  const clearCurrentAgent = () => {
+    currentAgent.value = null;
+  }
+
   const fetchAgents = async (search?: string) => {
     loading.value = true;
     clearError();
@@ -105,6 +109,7 @@ export function useAgent() {
   return {
     agents,
     currentAgent,
+    clearCurrentAgent,
     isLoading,
     hasError,
     errorMessage,
