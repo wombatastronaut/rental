@@ -8,6 +8,7 @@
 
 ### Full features (CRUD)
 ![Watch the demo](./assets/full-flow.mov)
+![Watch the demo](./assets/full-flow.mp4)
 
 <video width="640" controls>
   <source src="assets/full-flow.mov" type="video/quicktime">
