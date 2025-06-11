@@ -1,80 +1,176 @@
 
 <template>
-    <div class="agent-form w-full">
-        <div class="form-header">
-            <h2>{{ isEditing ? 'Edit' : 'Create' }} Agent</h2>
+    <div class="flex w-full">
+        <div class="flex-1">
+            <h2 class="text-center font-semibold text-2xl mb-5">Agents</h2>
+            <div class="agent-list">
+        <div class="p-6 bg-gray-50">
+            <div class="max-w-7xl mx-auto">
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Name
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Email
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Mobile
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Created At
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr v-for="agent in agents" :key="agent.id" class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        {{ agent.firstName }} {{ agent.lastName }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ agent.email }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ agent.mobileNumber }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ formatDate(agent.createdAt) }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <button type="button"
+                                            class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+                                            @click="handleView(agent)">
+                                            View
+                                        </button>
+                                        <button type="button"
+                                            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+                                            @click="handleDelete(agent)">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div v-if="agents.length === 0" class="text-center py-12">
+                        <div class="text-gray-500 text-lg">No agents found</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <form @submit.prevent="handleSubmit" class="form" novalidate>
-            <div class="form-group">
-                <label for="firstName" class="label">First Name *</label>
-                <input id="firstName" v-model="formData.firstName" type="text" class="input"
-                    :class="{ 'input-error': errors.firstName }" placeholder="Enter first name" required />
-                <span v-if="errors.firstName" class="error-text">{{ errors.firstName }}</span>
-            </div>
+    </div>
+        </div>
+        <div class="agent-form flex-1">
+            <h2 class="text-center font-semibold text-2xl mb-5  ">{{ isEditing ? 'Edit' : 'Create' }} Agent</h2>
+            <form @submit.prevent="handleSubmit" class="form" novalidate>
+                <div class="form-group">
+                    <label for="firstName" class="label">First Name *</label>
+                    <input id="firstName" v-model="formData.firstName" type="text" class="input"
+                        :class="{ 'input-error': errors.firstName }" placeholder="Enter first name" required />
+                    <span v-if="errors.firstName" class="error-text">{{ errors.firstName }}</span>
+                </div>
 
-            <div class="form-group">
-                <label for="lastName" class="label">Last Name *</label>
-                <input id="lastName" v-model="formData.lastName" type="text" class="input"
-                    :class="{ 'input-error': errors.lastName }" placeholder="Enter last name" required />
-                <span v-if="errors.lastName" class="error-text">{{ errors.lastName }}</span>
-            </div>
+                <div class="form-group">
+                    <label for="lastName" class="label">Last Name *</label>
+                    <input id="lastName" v-model="formData.lastName" type="text" class="input"
+                        :class="{ 'input-error': errors.lastName }" placeholder="Enter last name" required />
+                    <span v-if="errors.lastName" class="error-text">{{ errors.lastName }}</span>
+                </div>
 
-            <div class="form-group">
-                <label for="email" class="label">Email *</label>
-                <input id="email" v-model="formData.email" type="email" class="input"
-                    :class="{ 'input-error': errors.email }" placeholder="Enter email address" required />
-                <span v-if="errors.email" class="error-text">{{ errors.email }}</span>
-            </div>
+                <div class="form-group">
+                    <label for="email" class="label">Email *</label>
+                    <input id="email" v-model="formData.email" type="email" class="input"
+                        :class="{ 'input-error': errors.email }" placeholder="Enter email address" required />
+                    <span v-if="errors.email" class="error-text">{{ errors.email }}</span>
+                </div>
 
-            <div class="form-group">
-                <label for="mobileNumber" class="label">Mobile Number *</label>
-                <input id="mobileNumber" v-model="formData.mobileNumber" type="tel" class="input"
-                    :class="{ 'input-error': errors.mobileNumber }" placeholder="Enter mobile number" required />
-                <span v-if="errors.mobileNumber" class="error-text">{{ errors.mobileNumber }}</span>
-            </div>
+                <div class="form-group">
+                    <label for="mobileNumber" class="label">Mobile Number *</label>
+                    <input id="mobileNumber" v-model="formData.mobileNumber" type="tel" class="input"
+                        :class="{ 'input-error': errors.mobileNumber }" placeholder="Enter mobile number" required />
+                    <span v-if="errors.mobileNumber" class="error-text">{{ errors.mobileNumber }}</span>
+                </div>
 
-            <div v-if="hasError" class="error-message">
-                {{ errorMessage }}
-            </div>
+                <div v-if="hasError" class="error-message">
+                    {{ errorMessage }}
+                </div>
 
-            <div v-if="successMessage" class="success-message">
-                {{ successMessage }}
-            </div>
+                <div v-if="successMessage" class="success-message">
+                    {{ successMessage }}
+                </div>
 
-            <div class="form-actions">
-                <button type="button" @click="resetForm" class="btn btn-secondary" :disabled="isLoading">
-                    Reset
-                </button>
-                <button type="submit" class="btn btn-primary">
-                    {{ isLoading ? 'Saving...' : (isEditing ? 'Update' : 'Create') }}
-                </button>
+                <div class="form-actions">
+                    <button
+                        type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+                        @click="resetForm"    
+                    >
+                        Reset
+                    </button>
+
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none">
+                        {{ isLoading ? 'Saving...' : (isEditing ? 'Update' : 'Create') }}
+                    </button>
+                </div>
+            </form>
+
+            <div v-if="isEditing && currentAgent" class="current-agent-info">
+                <h3>Current Agent Information</h3>
+                <div class="info-grid">
+                    <div>
+                        <span class="font-bold">Name:</span> {{ currentAgent.firstName }} {{ currentAgent.lastName }}
+                    </div>
+                    <div>
+                        <span class="font-bold">Email:</span> {{ currentAgent.email }}
+                    </div>
+                    <div>
+                        <span class="font-bold">Mobile:</span> {{ currentAgent.mobileNumber }}
+                    </div>
+                    <div><strong>Created:</strong> {{ formatDate(currentAgent.createdAt) }}</div>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </template>
   
 <script setup lang="ts">
-import { PropertyAgent } from '@/types/propertyAgent';
+import { useAgent } from '@/composables/useAgent';
+import { Agent } from '@/types/agent';
 import { ref, reactive, computed, watch, onMounted } from 'vue';
+import AgentList from './AgentList.vue';
 
 interface Props {
-    agent?: PropertyAgent | null;
+    agent?: Agent | null;
 }
 
 const props = defineProps<Props>();
 
-const isLoading = false;
-const hasError = false;
-const errorMessage = '';
+const emit = defineEmits<{
+  success: [agent: Agent];
+  error: [message: string];
+}>();
 
-// const {
-//     isLoading,
-//     hasError,
-//     errorMessage,
-//     clearError,
-//     createAgent,
-//     updateAgent
-// } = usePropertyAgent();
+const {
+    currentAgent,
+    isLoading,
+    hasError,
+    errorMessage,
+    clearError,
+    agents,
+    createAgent,
+    updateAgent,
+    fetchAgents,
+    deleteAgent,
+    fetchAgent,
+} = useAgent();
 
 const formData = reactive({
     firstName: '',
@@ -87,19 +183,20 @@ const errors = reactive({
     firstName: '',
     lastName: '',
     email: '',
-    mobileNumber: ''
+    mobileNumber: ''    
 });
 
 const successMessage = ref('');
 
-const isEditing = computed(() => !!props.agent);
+const isEditing = computed(() => !!currentAgent);
 
-const isFormValid = computed(() => {
-    return formData.firstName.trim().length >= 2 &&
-        formData.lastName.trim().length >= 2 &&
-        validateEmail(formData.email) &&
-        validateMobileNumber(formData.mobileNumber);
-});
+const refreshAgents = async () => {
+    try {
+        await fetchAgents();
+    } catch (error: any) {
+        emit('error', error.message);
+    }
+}
 
 const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -119,13 +216,13 @@ const validateForm = (): boolean => {
         errors[key as keyof typeof errors] = '';
     });
 
-    if (formData.firstName.trim().length < 2) {
-        errors.firstName = 'First name must be at least 2 characters long';
+    if (formData.firstName.trim().length === 0) {
+        errors.firstName = 'First name is required';
         isValid = false;
     }
 
-    if (formData.lastName.trim().length < 2) {
-        errors.lastName = 'Last name must be at least 2 characters long';
+    if (formData.lastName.trim().length === 0) {
+        errors.lastName = 'Last name is required';
         isValid = false;
     }
 
@@ -142,19 +239,41 @@ const validateForm = (): boolean => {
     return isValid;
 };
 
-const handleSubmit = () => {
-    console.log('test')
+const handleSubmit = async () => {
     if (!validateForm()) {
         return;
     }
 
-    //   clearError();
+    clearError();
     successMessage.value = '';
+
+    try {
+        let result: Agent;
+
+        if (isEditing.value && currentAgent) {
+            result = await updateAgent(currentAgent.id, formData);
+            successMessage.value = 'Property agent updated successfully!';
+        } else {
+            result = await createAgent(formData);
+            successMessage.value = 'Property agent created successfully!';
+            resetForm();
+        }
+
+        emit('success', result);
+
+        setTimeout(() => {
+            successMessage.value = '';
+        }, 3000);
+
+        refreshAgents();
+    } catch (error: any) {
+        emit('error', error.message);
+    }
 }
 
 const resetForm = () => {
-    if (isEditing.value && props.agent) {
-        populateForm(props.agent);
+    if (isEditing.value && currentAgent) {
+        populateForm(currentAgent);
     } else {
         formData.firstName = '';
         formData.lastName = '';
@@ -166,7 +285,7 @@ const resetForm = () => {
         errors[key as keyof typeof errors] = '';
     });
 
-    //   clearError();
+    clearError();
     successMessage.value = '';
 };
 
@@ -176,28 +295,58 @@ const populateForm = (agent) => {
     formData.email = agent.email;
     formData.mobileNumber = agent.mobileNumber;
 };
+
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+};
+
+const handleView = async (agent: Agent) => {
+    try {
+        await fetchAgent(agent.id);
+        console.log('current agent', currentAgent)
+    } catch (error: any) {
+        emit('error', error.message);
+    }
+};
+
+const handleDelete = async (agent: Agent) => {
+    try {
+        await deleteAgent(agent.id);
+    } catch (error: any) {
+        emit('error', error.message);
+    }
+};
+
+watch(() => currentAgent, (newAgent) => {
+    if (newAgent) {
+        populateForm(newAgent);
+    } else {
+        resetForm();
+    }
+}, { immediate: true });
+
+onMounted(() => {
+    if (currentAgent) {
+        populateForm(currentAgent);
+    }
+
+    refreshAgents();
+});
 </script>
 
 <style scoped>
 .agent-form {
-    max-width: 600px;
     margin: 0 auto;
     padding: 2rem;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-}
-
-.form-header {
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.form-header h2 {
-    color: #1f2937;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 0;
 }
 
 .form {
@@ -271,39 +420,6 @@ const populateForm = (agent) => {
     margin-top: 1rem;
 }
 
-.btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s, opacity 0.2s;
-}
-
-.btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.btn-primary {
-    background-color: #3b82f6;
-    color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-    background-color: #2563eb;
-}
-
-.btn-secondary {
-    background-color: #6b7280;
-    color: white;
-}
-
-.btn-secondary:hover:not(:disabled) {
-    background-color: #4b5563;
-}
-
 .current-agent-info {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -326,20 +442,5 @@ const populateForm = (agent) => {
 
 .info-grid div {
     color: #4b5563;
-}
-
-@media (max-width: 640px) {
-    .agent-form {
-        padding: 1rem;
-        margin: 1rem;
-    }
-
-    .form-actions {
-        flex-direction: column;
-    }
-
-    .info-grid {
-        grid-template-columns: 1fr;
-    }
 }
 </style>
